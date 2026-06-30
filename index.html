@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Thank You, Tim! 🎉</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/moon.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" />
+
+    <style>
+      :root {
+        --mongodb-green: #00ed64;
+        --mongodb-dark: #001e2b;
+        --mongodb-slate: #1c2d38;
+        --accent: #e8c84c;
+      }
+
+      .reveal {
+        font-family: "Segoe UI", system-ui, sans-serif;
+      }
+
+      .reveal .slides section {
+        text-align: left;
+      }
+
+      /* Title slide */
+      .title-slide {
+        text-align: center !important;
+      }
+
+      .title-slide h1 {
+        font-size: 2.4em;
+        color: var(--mongodb-green) !important;
+        text-shadow: 0 0 30px rgba(0, 237, 100, 0.4);
+        margin-bottom: 0.2em;
+      }
+
+      .title-slide .subtitle {
+        font-size: 1.1em;
+        color: #aaa;
+        margin-top: 0;
+      }
+
+      .title-slide .emoji-row {
+        font-size: 2.5em;
+        margin: 0.4em 0;
+      }
+
+      /* Section headers */
+      .reveal h2 {
+        color: var(--mongodb-green);
+        font-size: 1.4em;
+        border-bottom: 2px solid rgba(0, 237, 100, 0.3);
+        padding-bottom: 0.2em;
+        margin-bottom: 0.6em;
+      }
+
+      .reveal h3 {
+        color: var(--accent);
+        font-size: 1.1em;
+        margin-bottom: 0.4em;
+      }
+
+      /* Stat cards */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 0.6em;
+      }
+
+      .stat-card {
+        background: rgba(0, 237, 100, 0.08);
+        border: 1px solid rgba(0, 237, 100, 0.25);
+        border-radius: 10px;
+        padding: 16px 20px;
+        text-align: center;
+      }
+
+      .stat-card .number {
+        font-size: 2.2em;
+        font-weight: 800;
+        color: var(--mongodb-green);
+        line-height: 1;
+      }
+
+      .stat-card .label {
+        font-size: 0.7em;
+        color: #aaa;
+        margin-top: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Timeline */
+      .timeline {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: rgba(0, 237, 100, 0.3);
+      }
+
+      .timeline li {
+        padding: 6px 0 6px 36px;
+        position: relative;
+        font-size: 0.78em;
+        line-height: 1.4;
+      }
+
+      .timeline li::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 10px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--mongodb-green);
+        box-shadow: 0 0 8px rgba(0, 237, 100, 0.6);
+      }
+
+      .timeline li .date {
+        color: var(--mongodb-green);
+        font-weight: 700;
+        font-size: 0.85em;
+        display: inline-block;
+        min-width: 90px;
+      }
+
+      .timeline li .milestone {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      /* Feature list */
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        columns: 2;
+        column-gap: 24px;
+      }
+
+      .feature-list li {
+        font-size: 0.72em;
+        padding: 4px 0;
+        padding-left: 1.4em;
+        position: relative;
+        break-inside: avoid;
+        line-height: 1.35;
+      }
+
+      .feature-list li::before {
+        content: "▸";
+        color: var(--mongodb-green);
+        position: absolute;
+        left: 0;
+      }
+
+      /* Thank you cards */
+      .thanks-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 0.5em;
+      }
+
+      .thanks-card {
+        background: rgba(232, 200, 76, 0.07);
+        border-left: 4px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 14px 18px;
+      }
+
+      .thanks-card h3 {
+        margin: 0 0 6px 0;
+        font-size: 0.9em;
+      }
+
+      .thanks-card p {
+        margin: 0;
+        font-size: 0.72em;
+        color: #ccc;
+        line-height: 1.5;
+      }
+
+      /* Quote slide */
+      .quote-block {
+        background: rgba(0, 237, 100, 0.06);
+        border-radius: 12px;
+        padding: 28px 32px;
+        text-align: center;
+        font-style: italic;
+        font-size: 0.9em;
+        color: #ddd;
+        line-height: 1.7;
+        margin-top: 0.5em;
+      }
+
+      .quote-block .author {
+        margin-top: 14px;
+        font-style: normal;
+        font-weight: 700;
+        color: var(--mongodb-green);
+        font-size: 0.85em;
+      }
+
+      /* Final slide */
+      .farewell-slide {
+        text-align: center !important;
+      }
+
+      .farewell-slide h1 {
+        font-size: 3em;
+        color: var(--mongodb-green) !important;
+        text-shadow: 0 0 40px rgba(0, 237, 100, 0.5);
+      }
+
+      .farewell-slide .tagline {
+        font-size: 1.1em;
+        color: #bbb;
+        margin-top: 0.3em;
+      }
+
+      .farewell-slide .emoji-big {
+        font-size: 3.5em;
+        margin: 0.3em 0;
+      }
+
+      /* Highlight badge */
+      .badge {
+        display: inline-block;
+        background: var(--mongodb-green);
+        color: #001e2b;
+        font-weight: 800;
+        font-size: 0.65em;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-left: 6px;
+        vertical-align: middle;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .badge.gold {
+        background: var(--accent);
+      }
+
+      .reveal ul {
+        margin-left: 1em;
+      }
+
+      .reveal li {
+        font-size: 0.8em;
+        margin-bottom: 0.3em;
+        line-height: 1.4;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: start;
+      }
+
+      .center {
+        text-align: center;
+      }
+
+      .reveal .progress {
+        color: var(--mongodb-green);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 1 – Title                            -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="title-slide" data-background-gradient="radial-gradient(ellipse at top, #0d2b1e 0%, #001e2b 60%)">
+          <div class="emoji-row">🎉🍃🎊</div>
+          <h1>Thank You, Tim!</h1>
+          <p class="subtitle">A tribute to Tim Graham — architect, fellow, and friend</p>
+          <br />
+          <p style="font-size: 0.65em; color: #667; margin-top: 1.5em;">
+            Press <kbd style="background:#1c2d38;padding:2px 6px;border-radius:4px;color:#aaa">→</kbd> to advance &nbsp;|&nbsp;
+            <kbd style="background:#1c2d38;padding:2px 6px;border-radius:4px;color:#aaa">Space</kbd> to advance &nbsp;|&nbsp;
+            <kbd style="background:#1c2d38;padding:2px 6px;border-radius:4px;color:#aaa">F</kbd> for fullscreen
+          </p>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 2 – Who is Tim?                      -->
+        <!-- ══════════════════════════════════════════ -->
+        <section data-background-gradient="linear-gradient(135deg, #001e2b 0%, #0d2b1e 100%)">
+          <h2>👋 Who is Tim Graham?</h2>
+          <div class="two-col">
+            <div>
+              <h3>The Django Fellow</h3>
+              <ul>
+                <li>Former <strong>Django Fellow</strong> at the Django Software Foundation — one of the most respected maintainer roles in the Python ecosystem</li>
+                <li>Django core contributor and release manager</li>
+                <li>Member of the Django community since long before MongoDB came knocking</li>
+                <li>Brought priceless Django internals expertise to an ambitious project</li>
+              </ul>
+            </div>
+            <div>
+              <h3>The MongoDB Builder</h3>
+              <ul>
+                <li>Joined to tackle one of the hardest problems in the Python web space: bridging Django's relational ORM with MongoDB's document model</li>
+                <li>Became the architect, primary engineer, release manager, and chief reviewer of <code>django-mongodb-backend</code></li>
+                <li>Guided the team from zero to General Availability</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 3 – By the Numbers                   -->
+        <!-- ══════════════════════════════════════════ -->
+        <section data-background-gradient="linear-gradient(135deg, #001e2b 0%, #0d1a2b 100%)">
+          <h2>📊 By the Numbers</h2>
+          <p style="font-size:0.72em;color:#888;margin-bottom:0.8em;">
+            <code>mongodb/django-mongodb-backend</code> + <code>mongodb-forks/django</code>
+          </p>
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="number">417</div>
+              <div class="label">Commits to django-mongodb-backend</div>
+            </div>
+            <div class="stat-card">
+              <div class="number">307</div>
+              <div class="label">Pull Requests authored</div>
+            </div>
+            <div class="stat-card">
+              <div class="number">3,457</div>
+              <div class="label">Contributions to mongodb-forks/django</div>
+            </div>
+            <div class="stat-card">
+              <div class="number">20+</div>
+              <div class="label">Releases shipped</div>
+            </div>
+          </div>
+          <p style="font-size:0.62em;color:#555;text-align:center;margin-top:0.8em;">
+            The #2 human contributor has 86 commits. Tim has 417. That's not a gap — it's a canyon. 🐐
+          </p>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 4 – Release Timeline                 -->
+        <!-- ══════════════════════════════════════════ -->
+        <section data-background-gradient="linear-gradient(135deg, #001e2b 0%, #0d2b1e 100%)">
+          <h2>🚀 Release Timeline</h2>
+          <ul class="timeline">
+            <li>
+              <span class="date">Jan 2025</span>
+              <span class="milestone">5.0.0 beta 0 &amp; 5.1.0 beta 0</span> — 🎉 Initial Public Preview launches
+            </li>
+            <li>
+              <span class="date">Feb 2025</span>
+              Async support, persistent connections, <code>MongoRouter</code>
+            </li>
+            <li>
+              <span class="date">Apr–May 2025</span>
+              <code>EmbeddedModelField</code> custom lookups, <code>dates()</code>/<code>datetimes()</code>, DB caching
+            </li>
+            <li>
+              <span class="date">May 2025</span>
+              <span class="milestone">5.2.0 beta 0</span> — SearchIndex, VectorSearchIndex, PyMongo connection pooling
+            </li>
+            <li>
+              <span class="date">Jun 2025</span>
+              <code>EmbeddedModelArrayField</code>
+            </li>
+            <li>
+              <span class="date">Aug 2025</span>
+              <span class="milestone">5.2.0 beta 2</span> — MongoDB Search, GeoDjango, Transactions, Polymorphic fields 🌍
+            </li>
+            <li>
+              <span class="date">Sep 2025</span>
+              <span class="milestone">✅ 5.2.0 GA — General Availability!</span>
+            </li>
+            <li>
+              <span class="date">Dec 2025</span>
+              <span class="milestone">🚀 6.0.0 — Django 6.0 support</span>
+            </li>
+            <li>
+              <span class="date">Jan 2026</span>
+              Queryable Encryption, spatial lookups
+            </li>
+            <li>
+              <span class="date">Feb–Jun 2026</span>
+              EmbeddedFieldIndex, QuerySet set operations, ObjectID URL patterns, MQL in <code>str(query)</code>
+            </li>
+          </ul>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 5 – Features Built                   -->
+        <!-- ══════════════════════════════════════════ -->
+        <section data-background-gradient="linear-gradient(135deg, #001e2b 0%, #0d1a2b 100%)">
+          <h2>🛠️ Features Tim Built</h2>
+          <ul class="feature-list">
+            <li>Entire Django backend from scratch</li>
+            <li>EmbeddedModelField <span class="badge">core</span></li>
+            <li>EmbeddedModelArrayField</li>
+            <li>PolymorphicEmbeddedModelField</li>
+            <li>EmbeddedFieldIndex &amp; UniqueConstraint</li>
+            <li>MongoDB Atlas SearchIndex</li>
+            <li>VectorSearchIndex</li>
+            <li>Full-text search queries</li>
+            <li>GeoDjango / spatial lookups <span class="badge">🌍</span></li>
+            <li>Database transactions <span class="badge">🔒</span></li>
+            <li>Queryable Encryption</li>
+            <li>Async Django ORM support</li>
+            <li>PyMongo connection pooling</li>
+            <li>MongoRouter for dumpdata</li>
+            <li>Connection string in DATABASES["HOST"]</li>
+            <li>QuerySet.explain() → JSON</li>
+            <li>str(query) → MQL output</li>
+            <li>ObjectID in URL patterns</li>
+            <li>QuerySet.intersection() / difference()</li>
+            <li>FilteredRelation support</li>
+            <li>Python 3.14 support</li>
+            <li>Query optimizer ($match &gt; $expr)</li>
+            <li>$lookup JOIN optimization</li>
+            <li>CI backend test suite setup</li>
+          </ul>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 6 – mongodb-forks/django             -->
+        <!-- ══════════════════════════════════════════ -->
+        <section data-background-gradient="linear-gradient(135deg, #001e2b 0%, #0d2b1e 100%)">
+          <h2>🍴 mongodb-forks/django</h2>
+          <p style="font-size:0.75em;color:#aaa;margin-bottom:0.6em;">
+            Adapting Django's internals to support MongoDB — upstream contributions too
+          </p>
+          <div class="two-col">
+            <div>
+              <h3>MongoDB-Specific Work</h3>
+              <ul>
+                <li>Embedded model schema change support</li>
+                <li><code>AddEmbeddedIndex</code> migration operation</li>
+                <li><code>ObjectIdAutoField</code> test adaptation</li>
+                <li><code>ListField</code> and <code>EmbeddedModelField</code> test suites</li>
+                <li>Enabled <code>runtests.py</code> to discover MongoDB-specific tests</li>
+                <li><code>Field.serialize_to_python/xml()</code> hooks (merged upstream)</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Django Core Upstream</h3>
+              <ul>
+                <li>CSRF Origin header checking (Fixed #16010)</li>
+                <li>Allowed <code>NowUTC</code> SQL customization for third-party backends (Refs #10929)</li>
+                <li>JSONField deep distinct fixes for non-standard backends</li>
+                <li><code>QuerySet.explain()</code> improvements</li>
+                <li>Third-party backend compatibility fixes throughout</li>
+                <li>Snowflake and CockroachDB support notes</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 7 – Thank You (3 pillars)            -->
+        <!-- ══════════════════════════════════════════ -->
+        <section data-background-gradient="linear-gradient(135deg, #0d2b1e 0%, #001e2b 100%)">
+          <h2>💚 Thank You, Tim</h2>
+          <div class="thanks-grid">
+            <div class="thanks-card">
+              <h3>🌐 Django Contributions</h3>
+              <p>
+                Your decade-plus of Django stewardship — as Fellow, core dev, and release manager — laid the groundwork for everything we built. You brought that institutional knowledge directly into our codebase and made it better for every Django developer who will ever use MongoDB.
+              </p>
+            </div>
+            <div class="thanks-card">
+              <h3>🍃 django-mongodb-backend Contributions</h3>
+              <p>
+                417 commits. 307 pull requests. 68% of the codebase. You took an ambitious idea from an empty repository to General Availability. That's not a contribution — that's <em>authorship</em>.
+              </p>
+            </div>
+            <div class="thanks-card">
+              <h3>🧭 Invaluable Guidance &amp; Instruction</h3>
+              <p>
+                You were always the trusted reviewer, the patient teacher, and the compass when things got complicated. The team learned from you every single day — not just about Django internals, but about how to build software thoughtfully.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 8 – PR #2 to PR #588                 -->
+        <!-- ══════════════════════════════════════════ -->
+        <section data-background-gradient="linear-gradient(135deg, #001e2b 0%, #0d1a2b 100%)">
+          <h2>🔖 From First to Last</h2>
+          <div class="two-col" style="gap:28px;margin-top:0.6em;">
+            <div>
+              <h3>PR #2 &nbsp;<span class="badge gold">First</span></h3>
+              <div style="background:rgba(0,237,100,0.07);border:1px solid rgba(0,237,100,0.2);border-radius:8px;padding:14px 16px;font-size:0.72em;line-height:1.6;">
+                <strong style="color:#00ed64">"initial commit of MongoDB backend"</strong>
+                <br /><span style="color:#888">April 22, 2024</span>
+                <br /><br />Where it all began — Tim opened PR #2 and bootstrapped the entire project into existence. An empty repo became a Django database backend.
+              </div>
+            </div>
+            <div>
+              <h3>PR #588 &nbsp;<span class="badge">Last</span></h3>
+              <div style="background:rgba(232,200,76,0.07);border:1px solid rgba(232,200,76,0.2);border-radius:8px;padding:14px 16px;font-size:0.72em;line-height:1.6;">
+                <strong style="color:#e8c84c">"Add support for TruncDate/TruncTime's tzinfo parameter"</strong>
+                <br /><span style="color:#888">June 29, 2026 — today ✨</span>
+                <br /><br />Tim merged his final PR on his <em>last day</em>. Right until the end, shipping features and making things better.
+              </div>
+            </div>
+          </div>
+          <p style="font-size:0.65em;color:#555;text-align:center;margin-top:0.9em;">
+            586 PRs between #2 and #588. Every single one of them mattered.
+          </p>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 9 – Hall of Fame Commit              -->
+        <!-- ══════════════════════════════════════════ -->
+        <section data-background-gradient="linear-gradient(135deg, #001e2b 0%, #0d1a2b 100%)">
+          <h2>🏆 Hall of Fame Commit</h2>
+          <div class="quote-block">
+            "Remove statement that database caching may be added in a future release.<br /><br />
+            <em>INTPYTHON-451 was closed as 'won't do' because Django's database caching uses pickle to serialize cached data and this could escalate a cache compromise into a remote-code execution.</em>"
+            <div class="author">— Tim Graham, commit message, 2025</div>
+          </div>
+          <p style="font-size:0.7em;color:#888;margin-top:0.8em;text-align:center;">
+            Only Tim could close a feature request, write a security rationale, and <em>document it all in a single commit message</em>. 🎩
+          </p>
+        </section>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SLIDE 10 – Farewell                        -->
+        <!-- ══════════════════════════════════════════ -->
+        <section class="farewell-slide" data-background-gradient="radial-gradient(ellipse at bottom, #0d2b1e 0%, #001e2b 60%)">
+          <div class="emoji-big">🎉</div>
+          <h1>Thanks for everything, Tim!</h1>
+          <p class="tagline">
+            The commits may stop, but the embedded documents live on forever.
+          </p>
+          <br />
+          <p style="font-size:0.75em;color:#667;margin-top:1em;">
+            <strong style="color:#00ed64">@timgraham</strong> &nbsp;·&nbsp; 417 commits &nbsp;·&nbsp; ~2 years &nbsp;·&nbsp; ∞ impact
+          </p>
+          <br />
+          <p style="font-size:0.65em;color:#445;">
+            🍃 mongodb/django-mongodb-backend &nbsp;·&nbsp; 🍴 mongodb-forks/django
+          </p>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        slideNumber: "c/t",
+        transition: "slide",
+        transitionSpeed: "default",
+        backgroundTransition: "fade",
+        controls: true,
+        progress: true,
+        center: false,
+        plugins: [RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
